@@ -1,0 +1,19 @@
+TODOS:
+
+- install arduino and interface with servos and IMU (and maybe ultrasonic)
+
+- figure out what to program everything in, learn how to use the maestro interface
+
+- start building the servo legs
+
+- figure out how to power everything
+
+- test pi battery
+
+- setup git and ssh
+
+- setup camera
+
+- create 3D chasis
+
+
