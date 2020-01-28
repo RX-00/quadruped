@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import serial
 from sys import version_info
 
