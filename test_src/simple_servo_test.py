@@ -2,14 +2,15 @@
 
 import maestro
 
+PORT_0 = 0
 
-servo1 = maestro.Controller() # create servo object
+servo = maestro.Controller() # create servo object
 
-servo1.setAccel(0,4)      # set servo 0 acceleration to 4
-servo1.setTarget(0,6000)  # set servo to move to center position
-servo1.setSpeed(1,10)     # set speed of servo 1
-x = servo1.getPosition(1) # get the current position of servo 1
+for i in range(0, 18):
+    servo.setAccel(i, 4)            # set servo # acceleration to 4
+    servo.setTarget(i, 6000)        # set servo # to move to center position
+    servo.setSpeed(i, 10)           # set speed of servo #
+    x = servo.getPosition(1)        # get the current position of servo #
+    printf('Servo %d pos: %d', i, x) # print current position of servo 1
 
-print('Servo 1 pos: ', x) # print current position of servo 1
-
-servo1.close()
+servo.close()
