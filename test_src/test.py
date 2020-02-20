@@ -45,15 +45,20 @@ servo.close
 # WHY WON'T THIS WORK?!
 
 PORT = 6
-
+pos = 4000
 servo = maestro.Controller()
 servo.setAccel(PORT, 0)
-servo.setSpeed(PORT, 60)
+servo.setSpeed(PORT, 0)
+servo.setTarget(PORT, pos)
 
-for i in range(1000, 3000):
-    servo.setTarget(PORT, i)
-    time.sleep(0.02)
-    print("servo: {}    servo target: {} \n".format(PORT, i))
+for i in range(0, 4):
+    tarPos = pos + i * 1000
+    servo.setTarget(PORT, tarPos)
+    time.sleep(0.2)
+    print("servo: {}    servo target: {} \n".format(PORT, tarPos))
     print("servo: {}    servo pos: {} \n".format(PORT, servo.getPosition(6)))
 
 servo.close()
+
+
+
