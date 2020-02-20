@@ -4,6 +4,7 @@ TODOS:
 
 - figure out what to program everything in, learn how to use the maestro interface
   - start testing the servos and power setup
+  - NOW ON RASPBERRY PI
 
 - start building the servo legs
 
