@@ -40,10 +40,6 @@ servo.close
 
 #servo.close
 
-
-
-# WHY WON'T THIS WORK?!
-
 PORT = 6
 pos = 4000
 servo = maestro.Controller()
@@ -53,10 +49,16 @@ servo.setTarget(PORT, pos)
 
 for i in range(0, 4):
     tarPos = pos + i * 1000
+
     servo.setTarget(PORT, tarPos)
-    time.sleep(0.2)
-    print("servo: {}    servo target: {} \n".format(PORT, tarPos))
-    print("servo: {}    servo pos: {} \n".format(PORT, servo.getPosition(6)))
+    #print("servo: {}    servo target: {} \n".format(PORT, tarPos))
+    #print("servo: {}    servo pos: {} \n".format(PORT, servo.getPosition(6)))
+
+    servo.setTarget(0, tarPos)
+    #print("servo: {}    servo target: {} \n".format(0, tarPos))
+    #print("servo: {}    servo pos: {} \n".format(0, servo.getPosition(6)))
+
+    time.sleep(0.9)
 
 servo.close()
 
