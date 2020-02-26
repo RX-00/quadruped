@@ -54,7 +54,7 @@ servo.setTarget(PORT, pos)
 for i in range(0, 4):
     tarPos = pos + i * 1000
     servo.setTarget(PORT, tarPos)
-    time.sleep(0.2)
+    time.sleep(0.5)
     print("servo: {}    servo target: {} \n".format(PORT, tarPos))
     print("servo: {}    servo pos: {} \n".format(PORT, servo.getPosition(6)))
 
