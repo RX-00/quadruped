@@ -4,6 +4,7 @@
  * implementation.
  */
 
+#include <iostream>
 #include <stdio.h>
 #include <cmath>
 
@@ -14,21 +15,33 @@
 
 #include "RPMSerialInterface.h"
 
-using namespace std
+using namespace std;
 
 int main(int argc, char** argv){
   // create the interface for the maestro
-  RPM::SerialInterface* serialInterface = RPM::SerialInterface::createSerialInterface("", 9600);
-  if (!serialInterface -> isOpen()){
-    cout << "ERROR: serial interface was not open, could not connect, terminating..." << endl;
-    return -1;
+  cout << "serial init" << endl;
+  unsigned char deviceNumber = 12;
+	unsigned char channelNumber = 2;
+
+	std::string portName = "/dev/ttyACM0";
+
+	unsigned int baudRate = 115200;
+	printf("Creating serial interface '%s' at %d bauds\n", portName.c_str(), baudRate);
+	std::string errorMessage;
+	RPM::SerialInterface* serialInterface = RPM::SerialInterface::createSerialInterface( portName, baudRate, &errorMessage );
+	if ( !serialInterface ){
+      printf("Failed to create serial interface. %s\n", errorMessage.c_str());
+      return -1;
   }
 
   // set the value of channel 6 to 6000 quarter of microseconds (i.e. 1.5 milliseconds)
   serialInterface -> setTargetCP(6, 6000);
+  Utils:sleep(1000);
 
   // delete the interface
+  cout << "deleting serial interface" << endl;
   delete serialInterface;
+  serialInterface = NULL;
 
   return 0;
 }

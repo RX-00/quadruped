@@ -1,27 +1,16 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 
 # set the project name
-PROJECT(quadruped_test_srvo)
-
-SET(HEADERS
-   quadruped/RapaPololuMaestro/include/RPMSerialInterface.h)
-
-SET(SOURCES
-   quadruped/RapaPololuMaestro/src/RPMSerialInterface.cpp)
-
-SET(HEADERS
-   quadruped/RapaPololuMaestro/include/RPMSerialInterfacePOSIX.h)
-
-SET(SOURCES
-   quadruped/RapaPololuMaestro/src/RPMSerialInterfacePOSIX.cpp)
-
-INCLUDE_DIRECTORIES(quadruped/RapaPololuMaestro/include)
-
-ADD_LIBRARY(${PROJECT_NAME} STATIC ${HEADERS} ${SOURCES})
+PROJECT(quadruped_test_srvs)
 
 # specify the C++ standard
 SET(CMAKE_CXX_STANDARD 11)
 SET(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# add RapaPololuMaestro library
+#ADD_SUBDIRECTORY(lib_RPM)
+
 # add the executable
-ADD_EXECUTABLE(quadruped_test_srvo RPM_test.cxx)
+ADD_EXECUTABLE(quadruped_test_srvs RPM_test.cpp)
+
+target_link_libraries(quadruped_test_srvs PUBLIC lib_RPM)

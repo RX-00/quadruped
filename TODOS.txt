@@ -2,17 +2,13 @@ TODOS:
 
 - install arduino and interface with servos and IMU (and maybe ultrasonic)
 
-- figure out what to program everything in, learn how to use the maestro interface
-  - start testing the servos and power setup
-  - NOW ON RASPBERRY PI
+- START WRITING C++ OPEN LOOP CONTROL & better understand & cleanup your sloppy code
 
 - start building the servo legs
 
 - figure out how to power everything
 
 - test pi battery
-
-- setup camera
 
 - create 3D chasis
 
