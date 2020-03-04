@@ -7,6 +7,7 @@ TODOS:
 - start building the servo legs
 
 - figure out how to power everything
+- CURRENT POWER METHOD IS MESSING UP SERVOS, AMP PULL PROBABLY THE PROBLEM
 
 - test pi battery
 

@@ -40,25 +40,24 @@ servo.close
 
 #servo.close
 
-PORT = 6
-pos = 4000
+PORT = 0
 servo = maestro.Controller()
 servo.setAccel(PORT, 0)
 servo.setSpeed(PORT, 0)
-servo.setTarget(PORT, pos)
+servo.setTarget(PORT, 4000)
 
-for i in range(0, 4):
-    tarPos = pos + i * 1000
-
-    servo.setTarget(PORT, tarPos)
-    #print("servo: {}    servo target: {} \n".format(PORT, tarPos))
-    #print("servo: {}    servo pos: {} \n".format(PORT, servo.getPosition(6)))
-
-    servo.setTarget(0, tarPos)
-    #print("servo: {}    servo target: {} \n".format(0, tarPos))
-    #print("servo: {}    servo pos: {} \n".format(0, servo.getPosition(6)))
-
-    time.sleep(0.9)
+# test ports 0 - 18
+for j in range(0, 19):
+    PORT = j
+    for i in range(0, 10):
+        tarPos = i * 1000
+        servo.setTarget(PORT, tarPos)
+        print("servo: {}    servo target: {} \n".format(PORT, tarPos))
+        #print("servo: {}    servo pos: {} \n".format(PORT, servo.getPosition(6)))
+        #servo.setTarget(0, tarPos)
+        #print("servo: {}    servo target: {} \n".format(0, tarPos))
+        #print("servo: {}    servo pos: {} \n".format(0, servo.getPosition(6)))
+        time.sleep(0.5)
 
 servo.close()
 
