@@ -1,48 +1,73 @@
-# Nice and simple versatile Makefile found from:
-# https://stackoverflow.com/questions/9178285/how-can-makefile-use-separate-directories-for-source-code-and-binaries
-# Then I edited it so it plays nice with my header files
 
-CC          = g++
-LD          = g++
-CFLAG       = -Wall
-PROG_NAME   = quadruped
+CXX ?= g++
 
+# path #
+SRC_PATH = src
+BUILD_PATH = build
+BIN_PATH = $(BUILD_PATH)/bin
 
-DEBUG ?= 1
-ifeq ($(DEBUG), 1)
-	CFLAGS := -g -Wall
-else
-	CFLAGS := -DNDEBUG -O3
-endif
+# executable #
+BIN_NAME = qt_run
 
-SRCEXT := cpp
-HEADEREXT := h
-SOURCES := $(shell find $(SRCDIR) -type f -name "*.$(SRCEXT)")
-OBJECTS := $(patsubst %.$(SRCEXT),%.o,$(SOURCES))
+# extensions #
+SRC_EXT = cpp
 
-$(exe_file): $(OBJECTS)
-	$(CC) $^ -o $(exe_file)
-%.o: %.$(SRCEXT) %.$(HEADEREXT)
-	$(CC) $(CFLAGS) -c -o $@ $<
+# code lists #
+# Find all source files in the source directory, sorted by
+# most recently modified
+SOURCES = $(shell find $(SRC_PATH) -name '*.$(SRC_EXT)' | sort -k 1nr | cut -f2-)
+# Set the object file names, with the source directory stripped
+# from the path, and the build path prepended in its place
+OBJECTS = $(SOURCES:$(SRC_PATH)/%.$(SRC_EXT)=$(BUILD_PATH)/%.o)
+# Set the dependency files that will be used to add header dependencies
+DEPS = $(OBJECTS:.o=.d)
 
-SRC_DIR     = ./src
-BUILD_DIR   = ./build
-BIN_DIR     = ./bin
-SRC_LIST = $(wildcard $(SRC_DIR)/*.cpp)
-OBJ_LIST = $(BUILD_DIR)/$(notdir $(SRC_LIST:.cpp=.o))
+# flags #
+COMPILE_FLAGS = -std=c++11 -Wall -Wextra -g
+INCLUDES = -I include/ -I /usr/local/include
+# Space-separated pkg-config libraries used by this project
+LIBS =
 
-.PHONY: all clean $(PROG_NAME) compile
+.PHONY: default_target
+default_target: release
 
-all: $(PROG_NAME)
+.PHONY: release
+release: export CXXFLAGS := $(CXXFLAGS) $(COMPILE_FLAGS)
+release: dirs
+	@$(MAKE) all
 
-compile:
-	$(exe_file): $(OBJECTS)
-		$(CC) $^ -o $(exe_file)
-	%.o: %.$(SRCEXT) %.$(HEADEREXT)
-		$(CC) $(CFLAGS) -c -o $@ $<
+.PHONY: dirs
+dirs:
+	@echo "Creating directories"
+	@mkdir -p $(dir $(OBJECTS))
+	@mkdir -p $(BIN_PATH)
 
-$(PROG_NAME): compile
-	$(LD) $(OBJ_LIST) -o $(BIN_DIR)/$@
-
+.PHONY: clean
 clean:
-	rm -f $(BIN_DIR)/$(PROG_NAME) $(BUILD_DIR)/*.o
+	@echo "Deleting $(BIN_NAME) symlink"
+	@$(RM) $(BIN_NAME)
+	@echo "Deleting directories"
+	@$(RM) -r $(BUILD_PATH)
+	@$(RM) -r $(BIN_PATH)
+
+# checks the executable and symlinks to the output
+.PHONY: all
+all: $(BIN_PATH)/$(BIN_NAME)
+	@echo "Making symlink: $(BIN_NAME) -> $<"
+	@$(RM) $(BIN_NAME)
+	@ln -s $(BIN_PATH)/$(BIN_NAME) $(BIN_NAME)
+
+# Creation of the executable
+$(BIN_PATH)/$(BIN_NAME): $(OBJECTS)
+	@echo "Linking: $@"
+	$(CXX) $(OBJECTS) -o $@
+
+# Add dependency files, if they exist
+-include $(DEPS)
+
+# Source file rules
+# After the first compilation they will be joined with the rules from the
+# dependency files to provide header dependencies
+$(BUILD_PATH)/%.o: $(SRC_PATH)/%.$(SRC_EXT)
+	@echo "Compiling: $< -> $@"
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -MP -MMD -c $< -o $@
