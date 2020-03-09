@@ -13,4 +13,4 @@ TODOS:
 
 - create 3D chasis
 
-
+- figure out and test range of servos with the C++ serial interface

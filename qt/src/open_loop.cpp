@@ -1,7 +1,8 @@
 /*
- * This program is to test how fast the servos will
- * respond with this library vs. the python
- * implementation.
+ * Simple open loop program for the legs
+ * aiming for a trot-esque gait
+ *
+ * TODO: need range of servos and legs first
  */
 
 #include <iostream>
@@ -17,26 +18,39 @@
 
 using namespace std;
 
+// servo port map to leg
+#define RF_HIP   0
+#define LF_HIP   1
+#define RB_HIP   2
+#define LB_HIP   3
+#define RF_THIGH 4
+#define LF_THIGH 5
+#define RB_THIGH 6
+#define LB_THIGH 7
+#define RF_KNEE  8
+#define LF_KNEE  9
+#define RB_KNEE  10
+#define LB_KNEE  11
 
-// A utility class to provide cross-platform sleep and simple time methods
-class Utils
-{
+// utility class for some cross-platform sleep and simple time methods
+class Utils{
 public:
-	static void sleep( unsigned int _Milliseconds );
-	static unsigned long long int getTickFrequency();
-	static unsigned long long int getTimeAsTicks();
-	static unsigned int getTimeAsMilliseconds();
-
+  static void sleep(unsigned int _Milliseconds);
+  static unsigned long long int getTickFrequency();
+  static unsigned long long int getTimeAsTicks();
+  static unsigned int getTimeAsMilliseconds();
 private:
-	static unsigned long long int mInitialTickCount;
+  static unsigned long long int mInitialTickCount;
 };
 
 // function to test device over serial w/ sinusoidal signals
 void sinusoid_signal(RPM::SerialInterface *serialInterface, unsigned char channelNumber);
 
+// open loop function
+void open_loop(RPM::SerialInterface *serialInterface);
+
 // Utils class implementation
-void Utils::sleep( unsigned int _Milliseconds )
-{
+void Utils::sleep( unsigned int _Milliseconds ){
 #if _WIN32
 	::Sleep( _Milliseconds );
 #else
@@ -48,8 +62,7 @@ void Utils::sleep( unsigned int _Milliseconds )
 #endif
 }
 
-unsigned long long int Utils::getTickFrequency()
-{
+unsigned long long int Utils::getTickFrequency(){
 #if _WIN32
 	LARGE_INTEGER frequency;
 	QueryPerformanceFrequency(&frequency);
@@ -60,8 +73,7 @@ unsigned long long int Utils::getTickFrequency()
 #endif
 }
 
-unsigned long long int Utils::getTimeAsTicks()
-{
+unsigned long long int Utils::getTimeAsTicks(){
 	unsigned long long int tickCount;
 #if _WIN32
 	LARGE_INTEGER l;
@@ -78,8 +90,7 @@ unsigned long long int Utils::getTimeAsTicks()
 	return tickCount;
 }
 
-unsigned int Utils::getTimeAsMilliseconds()
-{
+unsigned int Utils::getTimeAsMilliseconds(){
 	unsigned int millecondsTime = static_cast<unsigned int>( (getTimeAsTicks() * 1000) / getTickFrequency() );
 	return millecondsTime;
 }
@@ -107,38 +118,35 @@ void sinusoid_signal(RPM::SerialInterface *serialInterface, unsigned char channe
   }
 }
 
+void open_loop(RPM::SerialInterface *serialInterface){
+  cout << "Initiating open loop test..." << endl;
+}
+
 
 int main(int argc, char** argv){
   // create the interface for the maestro
   cout << "Serial interface init..." << endl;
   unsigned char deviceNumber = 12;
 	unsigned char channelNumber = 2;
-
 	std::string portName = "/dev/ttyACM0";
-
 	unsigned int baudRate = 115200;
+
 	printf("Creating serial interface '%s' at %d bauds\n", portName.c_str(), baudRate);
 	std::string errorMessage;
 	RPM::SerialInterface* serialInterface = RPM::SerialInterface::createSerialInterface( portName, baudRate, &errorMessage );
-	if ( !serialInterface ){
-      printf("Failed to create serial interface. %s\n", errorMessage.c_str());
-      cout << "Terminating program..." << endl;
-      return -1;
+
+  if ( !serialInterface ){
+    printf("Failed to create serial interface. %s\n", errorMessage.c_str());
+    cout << "Terminating program..." << endl;
+    return -1;
   }
   cout << "Serial interface initiated" << endl;
 
   sinusoid_signal(serialInterface, channelNumber);
 
-  // TODO: FIND OUT THE RANGE OF THE SERVOS IN THIS INTERFACE
 
-  // test each servo port
-  for (int port_num = 0; port_num < 18; port_num++){
-    for (int i = 0; i < 11; i++){
-      printf("Testing port %d at pos: %d \n", port_num, i * 1000);
-      serialInterface -> setTargetCP(port_num, i * 1000);
-      Utils::sleep(1000);
-    }
-  }
+  open_loop(serialInterface);
+
 
   // delete the interface
   cout << "Terminating serial interface..." << endl;
