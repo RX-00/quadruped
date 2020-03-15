@@ -19,7 +19,8 @@ using namespace std;
 
 
 // A utility class to provide cross-platform sleep and simple time methods
-class Utils{
+class Utils
+{
 public:
 	static void sleep( unsigned int _Milliseconds );
 	static unsigned long long int getTickFrequency();
@@ -34,7 +35,8 @@ private:
 void sinusoid_signal(RPM::SerialInterface *serialInterface, unsigned char channelNumber);
 
 // Utils class implementation
-void Utils::sleep( unsigned int _Milliseconds ){
+void Utils::sleep( unsigned int _Milliseconds )
+{
 #if _WIN32
 	::Sleep( _Milliseconds );
 #else
@@ -46,7 +48,8 @@ void Utils::sleep( unsigned int _Milliseconds ){
 #endif
 }
 
-unsigned long long int Utils::getTickFrequency(){
+unsigned long long int Utils::getTickFrequency()
+{
 #if _WIN32
 	LARGE_INTEGER frequency;
 	QueryPerformanceFrequency(&frequency);
@@ -57,7 +60,8 @@ unsigned long long int Utils::getTickFrequency(){
 #endif
 }
 
-unsigned long long int Utils::getTimeAsTicks(){
+unsigned long long int Utils::getTimeAsTicks()
+{
 	unsigned long long int tickCount;
 #if _WIN32
 	LARGE_INTEGER l;
@@ -74,7 +78,8 @@ unsigned long long int Utils::getTimeAsTicks(){
 	return tickCount;
 }
 
-unsigned int Utils::getTimeAsMilliseconds(){
+unsigned int Utils::getTimeAsMilliseconds()
+{
 	unsigned int millecondsTime = static_cast<unsigned int>( (getTimeAsTicks() * 1000) / getTickFrequency() );
 	return millecondsTime;
 }
@@ -131,7 +136,7 @@ int main(int argc, char** argv){
     for (int i = 0; i < 11; i++){
       printf("Testing port %d at pos: %d \n", port_num, i * 1000);
       serialInterface -> setTargetCP(port_num, i * 1000);
-      Utils::sleep(500);
+      Utils::sleep(1000);
     }
   }
 
