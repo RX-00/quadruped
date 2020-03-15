@@ -25,6 +25,7 @@ DEPS = $(OBJECTS:.o=.d)
 # flags #
 COMPILE_FLAGS = -std=c++11 -Wall -Wextra -g
 INCLUDES = -I include/ -I /usr/local/include
+
 # Space-separated pkg-config libraries used by this project
 LIBS =
 
