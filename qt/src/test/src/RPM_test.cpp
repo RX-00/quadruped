@@ -125,8 +125,39 @@ int main(int argc, char** argv){
   sinusoid_signal(serialInterface, channelNumber);
 
   // TODO: FIND OUT THE RANGE OF THE SERVOS IN THIS INTERFACE
+  int min = 0;
+  int max = 10;
+  int pos;
+  // test each servo port at the "same time"
+  printf("Testing all ports from min to max... \n");
+  for (int i = 0; i < 2; i++){
+    if (i == 0)
+      pos = min;
+    else
+      pos = max;
+    serialInterface -> setTargetCP(0, pos);
+    serialInterface -> setTargetCP(1, pos);
+    serialInterface -> setTargetCP(2, pos);
+    serialInterface -> setTargetCP(3, pos);
+    serialInterface -> setTargetCP(4, pos);
+    serialInterface -> setTargetCP(5, pos);
+    serialInterface -> setTargetCP(6, pos);
+    serialInterface -> setTargetCP(7, pos);
+    serialInterface -> setTargetCP(8, pos);
+    serialInterface -> setTargetCP(9, pos);
+    serialInterface -> setTargetCP(10, pos);
+    serialInterface -> setTargetCP(11, pos);
+    serialInterface -> setTargetCP(12, pos);
+    serialInterface -> setTargetCP(13, pos);
+    serialInterface -> setTargetCP(14, pos);
+    serialInterface -> setTargetCP(15, pos);
+    serialInterface -> setTargetCP(16, pos);
+    serialInterface -> setTargetCP(17, pos);
 
-  // test each servo port
+    Utils::sleep(1000);
+  }
+
+  // test each servo port in sequence
   for (int port_num = 0; port_num < 18; port_num++){
     for (int i = 0; i < 11; i++){
       printf("Testing port %d at pos: %d \n", port_num, i * 1000);
