@@ -1,5 +1,3 @@
-Servo range with C++ serial interface program:
-min:
-max:
-step:
-
+Servo range with C++ serial interface program based on sinusoid_signal test:
+min: 4000
+max: 8000
