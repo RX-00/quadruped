@@ -3,11 +3,11 @@
 
 import signal
 import time
-import GYRO
+import gyro
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal.SIG_DFL)
-    gyro = GYRO.GYRO()
+    gyro = gyro.gyro()
     time.sleep(0.1)
     gyro.sensor_calib()
     prev = time.time()

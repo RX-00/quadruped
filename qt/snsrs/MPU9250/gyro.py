@@ -48,7 +48,7 @@ MG_HZH = 0x08
 MG_CNTL1 = 0x0A
 
 
-class GYRO:
+class gyro:
 
     __INIT_FLAG = False
 
