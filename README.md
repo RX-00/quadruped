@@ -12,3 +12,11 @@ Differences include:
     - Rewritten software
     - STL design modifications based on mods
     - etc.
+
+TODO: swing & thigh servo STL mod
+      - ideal (from real world handiwork) is 20 mm (after 1.5 scale in mm in Rize OneTouch)
+      - make sure to factor in the scaling difference when modifying the stls
+      - don't scale until OneTouch setup (for consistency's sake)
+	- could also double check the numbers after scaling (one in FreeCAD & upload to OneTouch 
+          and another clean upload to OneTouch)
+

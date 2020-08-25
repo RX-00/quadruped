@@ -10,3 +10,6 @@ TODOS:
 - [REDACTED] PRINT rest of the side baffles (4 total) with the rest of the legs
 
 - PRINT Battery Compartment with legs (or second print)
+
+NOTE: servo hold in thigh and swing for leg, width is ideally 20 mm (after 1.5 scale in Rize OneTouch)
+      need to change the STLs to reflect this resizing
