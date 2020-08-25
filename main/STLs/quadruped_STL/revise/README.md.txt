@@ -1,0 +1,12 @@
+TODOS:
+- side_swing_motor_fixings (first print rest of the body and test assembley)
+	- need to decrease wall width from inside
+	- need to remove inner struts for the servo
+	- may need to change roll servo attachment depending on first print assembley test
+- thigh
+	- need to decrease wall width from inside
+	- need to remove inner struts for the servo
+- PRINT rest of the abdominal support structures with the rest of the legs
+- [REDACTED] PRINT rest of the side baffles (4 total) with the rest of the legs
+
+- PRINT Battery Compartment with legs (or second print)
