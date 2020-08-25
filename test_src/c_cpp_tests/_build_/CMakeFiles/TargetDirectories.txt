@@ -1,3 +1,0 @@
-/home/dev/quadruped/test_src/c_cpp_tests/_build_/CMakeFiles/rebuild_cache.dir
-/home/dev/quadruped/test_src/c_cpp_tests/_build_/CMakeFiles/quadruped_test_srvs.dir
-/home/dev/quadruped/test_src/c_cpp_tests/_build_/CMakeFiles/edit_cache.dir

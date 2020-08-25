@@ -1,0 +1,16 @@
+TODOS:
+
+- install arduino and interface with servos and IMU (and maybe ultrasonic)
+
+- START WRITING C++ OPEN LOOP CONTROL & better understand & cleanup your sloppy code
+
+- start building the servo legs
+
+- figure out how to power everything
+- CURRENT POWER METHOD IS MESSING UP SERVOS, AMP PULL PROBABLY THE PROBLEM
+
+- test pi battery
+
+- create 3D chasis
+
+- figure out and test range of servos with the C++ serial interface

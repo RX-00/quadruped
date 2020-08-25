@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/dev/quadruped/test_src/c_cpp_tests/RPM_test.cpp
+iostream
+-
+stdio.h
+-
+cmath
+-
+unistd.h
+-
+sys/timeb.h
+-
+time.h
+-
+sys/time.h
+-
+/home/dev/quadruped/test_src/c_cpp_tests/lib_RPM/RPMSerialInterface.h
+-
+
+/home/dev/quadruped/test_src/c_cpp_tests/lib_RPM/RPMSerialInterface.h
+string
+-
+
