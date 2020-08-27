@@ -6,9 +6,9 @@ TODOS:
 - thigh
 	- need to decrease wall width from inside
 	- need to remove inner struts for the servo
-- PRINT rest of the abdominal support structures with the rest of the legs
-- [REDACTED] PRINT rest of the side baffles (4 total) with the rest of the legs
 
+- PRINT rest of the abdominal support structures with the rest of the legs
+- PRINT handles again (facing sideways)
 - PRINT Battery Compartment with legs (or second print)
 
 NOTE: servo hold in thigh and swing for leg, width is ideally 20 mm (after 1.5 scale in Rize OneTouch)
