@@ -19,4 +19,5 @@ TODO: swing & thigh servo STL mod
       - don't scale until OneTouch setup (for consistency's sake)
 	- could also double check the numbers after scaling (one in FreeCAD & upload to OneTouch 
           and another clean upload to OneTouch)
+- MAKE SURE TO ONLY PRINT MIRRORED THIGH (AND LEG) PARTS ONLY NOW
 
