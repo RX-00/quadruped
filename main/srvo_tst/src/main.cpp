@@ -23,7 +23,6 @@
 #include <thread>
 
 #include "rs232.h"              // serial TX RX
-#include "RTIMULib.h"           // IMU
 #include "RPMSerialInterface.h" // servos
 #include "Utils.h"              // servo utility class for sleep & time methods
 
@@ -35,8 +34,8 @@
 #define CYCLE_TIME 150  // sleep for 100ms
 
 //NOTE: modified the RPM library to allow for greater servo range
-#define SRVO_MAX   10000
-#define SRVO_MIN   2000
+#define SRVO_MAX   6000
+#define SRVO_MIN   1000
 #define LEFT_HIP   1
 #define RIGHT_HIP  0
 #define LEFT_KNEE  3
@@ -119,82 +118,24 @@ int main(int argc, char** argv){
 	unsigned char channelNumber = 11;
   std::string portName = "/dev/ttyACM0";
   RPM::SerialInterface *servosInterface = serialInterfaceInit(deviceNumber, channelNumber, portName);
+
   servosInterface -> SerialInterface::mMinChannelValue = SRVO_MIN;
   servosInterface -> SerialInterface::mMaxChannelValue = SRVO_MAX;
 
-  // Setup IMU
-  int sampleCount = 0;
-  int sampleRate = 0;
-  uint64_t rateTimer;
-  uint64_t displayTimer;
-  uint64_t now;
-  RTIMUSettings *settings = new RTIMUSettings("RTIMULib");
-  RTIMU *imu = RTIMU::createIMU(settings);
-  if ((imu == NULL) || (imu->IMUType() == RTIMU_TYPE_NULL)) {
-    printf("No IMU found\n");
-    exit(1);
-  }
-  imu->IMUInit();
-  // this is a convenient place to change fusion parameters
-  imu->setSlerpPower(0.02);
-  imu->setGyroEnable(true);
-  imu->setAccelEnable(true);
-  imu->setCompassEnable(true);
-  // set up for rate timer
-  rateTimer = displayTimer = RTMath::currentUSecsSinceEpoch();
+  for (int i = 0; i < 5; i++){
+    std::cout << "servos min pos" << std::endl;
+    servosInterface -> setTargetCP(LEFT_KNEE, SRVO_MIN);
+    servosInterface -> setTargetCP(RIGHT_KNEE, SRVO_MIN);
+    Utils::sleep(1000);
 
-  // Setup comms
-  Com comms(BUF_SIZE, PORT_NUM, BAUDRATE);
-  char mode[] = {'8', 'N', '1', 0}; // 8 data bits, no parity, 1 stop bit
-  char str_send[1][BUF_SIZE];
-  unsigned char str_recv[BUF_SIZE];
-  std::cout << "Opening serial port...\n\n" << std::endl;
-  if (RS232_OpenComport(PORT_NUM, BAUDRATE, mode, 0)){ // 0 is no flowctrl
-    printf("Cannot open port\n");
-    return 0;
-  }
-  //usleep(500000 * 2); // usec -> 1000ms for stable condition
-  //std::this_thread::sleep_for(std::chrono::milliseconds(TX_TIME));
-  Utils::sleep(TX_TIME);
-
-
-  //setup default leg position
-  default_pos(servosInterface);
-
-  // Main loop
-  for(int j = 0; j < 10; j++){
-    // dummy velocity data
-    comms.setSpd((rand() % (255 * 2 + 1) + (-255)), (rand() % (255 * 2 + 1) + (-255)));
-    comms.formatData();
-    strcpy(str_send[0], comms.data.c_str());
-    RS232_cputs(PORT_NUM, str_send[0]); // sends string on serial
-
-    //usleep(100000); // waits for reply 100ms
-    //std::this_thread::sleep_for(std::chrono::milliseconds(RX_TIME));
-    Utils::sleep(RX_TIME);
-
-    int n = RS232_PollComport(PORT_NUM, str_recv, (int)BUF_SIZE);
-    if(n > 0){
-      str_recv[n] = 0; // always put a "null" at the end of a string
-      //printf("RX: %s\n", (char *)str_recv);
-      std::string RX_data((char *)str_recv);
-      comms.interpretRXData(RX_data);
-    }
-    //usleep(100000 * 5); // sleep for 100ms
-    //std::this_thread::sleep_for(std::chrono::milliseconds(CYCLE_TIME));
-    Utils::sleep(CYCLE_TIME);
+    std::cout << "servos max pos" << std::endl;
+    servosInterface -> setTargetCP(LEFT_KNEE, SRVO_MAX);
+    servosInterface -> setTargetCP(RIGHT_KNEE, SRVO_MAX);
+    Utils::sleep(1000);
   }
 
-  RS232_CloseComport(PORT_NUM);
   delete servosInterface;
   servosInterface = NULL;
-
-  std::cout << "\n\nGot left encoder val: " << comms.getLeftEncoder() << std::endl;
-  std::cout << "Got right encoder val:" << comms.getRightEncoder() << std::endl;
-  std::cout << "Got usec time: " << comms.getTimeUsec() << std::endl;
-  std::cout << "Got sec time: " << comms.getTimeSec() << std::endl;
-  std::cout << "Sent left speed: " << comms.getLSpd() << std::endl;
-  std::cout << "RX left speed: " << comms.getLSpdRX() << std::endl;
 
   return 0;
 }
