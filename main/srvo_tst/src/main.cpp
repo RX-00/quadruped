@@ -36,11 +36,14 @@
 //NOTE: modified the RPM library to allow for greater servo range
 #define SRVO_MAX   6000
 #define SRVO_MIN   1000
-#define LEFT_HIP   1
-#define RIGHT_HIP  0
-#define LEFT_KNEE  3
-#define RIGHT_KNEE 2
-
+#define SRVO_R_MAX SRVO_MIN
+#define SRVO_R_MIN SRVO_MAX
+#define SRVO_L_MAX SRVO_MAX
+#define SRVO_L_MIN SRVO_MIN
+#define RIGHT_FRONT_KNEE 2
+#define RIGHT_BACK_KNEE  3
+#define LEFT_FRONT_KNEE 4
+#define LEFT_BACK_KNEE  5
 
 //TODO: test that class for delaying the serial interface
 
@@ -48,10 +51,10 @@
 void default_pos(RPM::SerialInterface *serialInterface){
   std::cout << "Moving into default position in 1 seconds..." << std::endl;
   Utils::sleep(1000);
-  serialInterface -> setTargetCP(LEFT_HIP, 3000);  // LOWER  (back)
+  /*serialInterface -> setTargetCP(LEFT_HIP, 3000);  // LOWER  (back)
   serialInterface -> setTargetCP(RIGHT_HIP, 9000); // HIGHER (back)
   serialInterface -> setTargetCP(LEFT_KNEE, SRVO_MIN);
-  serialInterface -> setTargetCP(RIGHT_KNEE, SRVO_MAX);
+  serialInterface -> setTargetCP(RIGHT_KNEE, SRVO_MAX);*/
   Utils::sleep(1500);
   exit(1); // NOTE: THIS IS FOR MEGA_IP_TESTING
 }
@@ -124,13 +127,17 @@ int main(int argc, char** argv){
 
   for (int i = 0; i < 5; i++){
     std::cout << "servos min pos" << std::endl;
-    servosInterface -> setTargetCP(LEFT_KNEE, SRVO_MIN);
-    servosInterface -> setTargetCP(RIGHT_KNEE, SRVO_MIN);
+    servosInterface -> setTargetCP(RIGHT_FRONT_KNEE, SRVO_R_MIN);
+    servosInterface -> setTargetCP(RIGHT_BACK_KNEE, SRVO_R_MIN);
+    servosInterface -> setTargetCP(LEFT_FRONT_KNEE, SRVO_L_MIN);
+    servosInterface -> setTargetCP(LEFT_BACK_KNEE, SRVO_L_MIN);
     Utils::sleep(1000);
 
     std::cout << "servos max pos" << std::endl;
-    servosInterface -> setTargetCP(LEFT_KNEE, SRVO_MAX);
-    servosInterface -> setTargetCP(RIGHT_KNEE, SRVO_MAX);
+    servosInterface -> setTargetCP(RIGHT_FRONT_KNEE, SRVO_R_MAX);
+    servosInterface -> setTargetCP(RIGHT_BACK_KNEE, SRVO_R_MAX);
+    servosInterface -> setTargetCP(LEFT_FRONT_KNEE, SRVO_L_MAX);
+    servosInterface -> setTargetCP(LEFT_BACK_KNEE, SRVO_L_MAX);
     Utils::sleep(1000);
   }
 
