@@ -34,12 +34,16 @@
 #define CYCLE_TIME 150  // sleep for 100ms
 
 //NOTE: modified the RPM library to allow for greater servo range
-#define SRVO_MAX   6000
-#define SRVO_MIN   1000
-#define SRVO_R_MAX SRVO_MIN
-#define SRVO_R_MIN SRVO_MAX
-#define SRVO_L_MAX SRVO_MAX
-#define SRVO_L_MIN SRVO_MIN
+#define SRVO_MAX 16000
+#define SRVO_MIN 1000 // NOTE: I don't think this is the right wave val for "true" min
+#define SRVO_MID 6000
+#define SRVO_MAX_KNEE   6000
+#define SRVO_MIN_KNEE   1000
+#define SRVO_R_MAX_KNEE SRVO_MIN_KNEE
+#define SRVO_R_MIN_KNEE SRVO_MAX_KNEE
+#define SRVO_L_MAX_KNEE SRVO_MAX_KNEE
+#define SRVO_L_MIN_KNEE SRVO_MIN_KNEE
+#define LEFT_FRONT_SHOULDER_LAT 1
 #define RIGHT_FRONT_KNEE 2
 #define RIGHT_BACK_KNEE  3
 #define LEFT_FRONT_KNEE 4
@@ -125,21 +129,27 @@ int main(int argc, char** argv){
   servosInterface -> SerialInterface::mMinChannelValue = SRVO_MIN;
   servosInterface -> SerialInterface::mMaxChannelValue = SRVO_MAX;
 
-  for (int i = 0; i < 5; i++){
+  for (int i = 0; i < 3; i++){
     std::cout << "servos min pos" << std::endl;
-    servosInterface -> setTargetCP(RIGHT_FRONT_KNEE, SRVO_R_MIN);
-    servosInterface -> setTargetCP(RIGHT_BACK_KNEE, SRVO_R_MIN);
-    servosInterface -> setTargetCP(LEFT_FRONT_KNEE, SRVO_L_MIN);
-    servosInterface -> setTargetCP(LEFT_BACK_KNEE, SRVO_L_MIN);
+    servosInterface -> setTargetCP(RIGHT_FRONT_KNEE, SRVO_R_MIN_KNEE);
+    servosInterface -> setTargetCP(RIGHT_BACK_KNEE, SRVO_R_MIN_KNEE);
+    servosInterface -> setTargetCP(LEFT_FRONT_KNEE, SRVO_L_MIN_KNEE);
+    servosInterface -> setTargetCP(LEFT_BACK_KNEE, SRVO_L_MIN_KNEE);
+    servosInterface -> setTargetCP(LEFT_FRONT_SHOULDER_LAT, SRVO_MIN);
     Utils::sleep(1000);
 
     std::cout << "servos max pos" << std::endl;
-    servosInterface -> setTargetCP(RIGHT_FRONT_KNEE, SRVO_R_MAX);
-    servosInterface -> setTargetCP(RIGHT_BACK_KNEE, SRVO_R_MAX);
-    servosInterface -> setTargetCP(LEFT_FRONT_KNEE, SRVO_L_MAX);
-    servosInterface -> setTargetCP(LEFT_BACK_KNEE, SRVO_L_MAX);
+    servosInterface -> setTargetCP(RIGHT_FRONT_KNEE, SRVO_R_MAX_KNEE);
+    servosInterface -> setTargetCP(RIGHT_BACK_KNEE, SRVO_R_MAX_KNEE);
+    servosInterface -> setTargetCP(LEFT_FRONT_KNEE, SRVO_L_MAX_KNEE);
+    servosInterface -> setTargetCP(LEFT_BACK_KNEE, SRVO_L_MAX_KNEE);
+    servosInterface -> setTargetCP(LEFT_FRONT_SHOULDER_LAT, SRVO_MAX);
     Utils::sleep(1000);
   }
+
+  std::cout << "servos mid pos " << SRVO_MID << std::endl;
+  servosInterface -> setTargetCP(LEFT_FRONT_SHOULDER_LAT, SRVO_MID);
+  Utils::sleep(1000);
 
   delete servosInterface;
   servosInterface = NULL;
