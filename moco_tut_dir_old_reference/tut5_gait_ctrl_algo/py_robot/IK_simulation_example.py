@@ -19,7 +19,7 @@ p.setGravity(0,0,-9.8)
 
 p.loadURDF("plane.urdf")
 cubeStartPos = [0,0,0.2]
-boxId = p.loadURDF("C:/Users/golaced/Desktop/py_robot/4leggedRobot.urdf",cubeStartPos, useFixedBase=False)
+boxId = p.loadURDF("/home/royxing/Projects/quadruped/moco_tut_dir_old_reference/tut5_gait_ctrl_algo/py_robot",cubeStartPos, useFixedBase=False)
 jointIds = []
 paramIds = [] 
 

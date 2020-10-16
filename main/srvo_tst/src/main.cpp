@@ -43,8 +43,15 @@
 #define SRVO_R_MIN_KNEE SRVO_MAX_KNEE
 #define SRVO_L_MAX_KNEE SRVO_MAX_KNEE
 #define SRVO_L_MIN_KNEE SRVO_MIN_KNEE
+#define RIGHT_FRONT_SHOULDER_ROT 101 // ROT = rotational inner shoulder servo
+#define RIGHT_BACK_SHOULDER_ROT 102
+#define LEFT_FRONT_SHOULDER_ROT 103
+#define LEFT_BACK_SHOULDER_ROT 104
+#define RIGHT_FRONT_SHOULDER_LAT 101 // LAT = lateral outer shoulder servo
+#define RIGHT_BACK_SHOULDER_LAT 100
 #define LEFT_FRONT_SHOULDER_LAT 1
-#define RIGHT_FRONT_KNEE 2
+#define LEFT_BACK_SHOULDER_LAT 0
+#define RIGHT_FRONT_KNEE 2           // KNEE = leg knee servo
 #define RIGHT_BACK_KNEE  3
 #define LEFT_FRONT_KNEE 4
 #define LEFT_BACK_KNEE  5
@@ -128,7 +135,7 @@ int main(int argc, char** argv){
 
   servosInterface -> SerialInterface::mMinChannelValue = SRVO_MIN;
   servosInterface -> SerialInterface::mMaxChannelValue = SRVO_MAX;
-
+  /*
   for (int i = 0; i < 3; i++){
     std::cout << "servos min pos" << std::endl;
     servosInterface -> setTargetCP(RIGHT_FRONT_KNEE, SRVO_R_MIN_KNEE);
@@ -150,6 +157,28 @@ int main(int argc, char** argv){
   std::cout << "servos mid pos " << SRVO_MID << std::endl;
   servosInterface -> setTargetCP(LEFT_FRONT_SHOULDER_LAT, SRVO_MID);
   Utils::sleep(1000);
+  */
+
+  for (int i = 0; i < 3; i++){
+    std::cout << "servos max pos" << std::endl;
+    servosInterface -> setTargetCP(5, SRVO_MAX);
+    servosInterface -> setTargetCP(4, SRVO_MAX);
+    servosInterface -> setTargetCP(3, SRVO_MAX);
+    servosInterface -> setTargetCP(2, SRVO_MAX);
+    Utils::sleep(1000);
+    std::cout << "servos min pos" << std::endl;
+    servosInterface -> setTargetCP(5, SRVO_MIN);
+    servosInterface -> setTargetCP(4, SRVO_MIN);
+    servosInterface -> setTargetCP(3, SRVO_MIN);
+    servosInterface -> setTargetCP(2, SRVO_MIN);
+    Utils::sleep(1000);
+    std::cout << "servos mid pos" << std::endl;
+    servosInterface -> setTargetCP(5, SRVO_MID);
+    servosInterface -> setTargetCP(4, SRVO_MID);
+    servosInterface -> setTargetCP(3, SRVO_MID);
+    servosInterface -> setTargetCP(2, SRVO_MID);
+    Utils::sleep(1000);
+  }
 
   delete servosInterface;
   servosInterface = NULL;
