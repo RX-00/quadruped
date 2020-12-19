@@ -1,0 +1,34 @@
+"":
+  joint_states_controller:
+      type: joint_state_controller/JointStateController
+      publish_rate: 50
+
+  joint_group_position_controller:
+      type: effort_controllers/JointTrajectoryController
+      joints:
+          - coxaF_FL
+          - femurF_FL
+          - tibiaF_FL
+          - coxaF_FR
+          - femurF_FR
+          - tibiaF_FR
+          - coxaF_BL
+          - femurF_BL
+          - tibiaF_BL
+          - coxaF_BR
+          - femurF_BR
+          - tibiaF_BR
+
+      gains:
+        coxaF_FL : {p: 180, d: 0.9, i: 20}
+        femurF_FL : {p: 180, d: 0.9, i: 20}
+        tibiaF_FL : {p: 180, d: 0.9, i: 20}
+        coxaF_FR : {p: 180, d: 0.9, i: 20}
+        femurF_FR : {p: 180, d: 0.9, i: 20}
+        tibiaF_FR : {p: 180, d: 0.9, i: 20}
+        coxaF_BL : {p: 180, d: 0.9, i: 20}
+        femurF_BL : {p: 180, d: 0.9, i: 20}
+        tibiaF_BL : {p: 180, d: 0.9, i: 20}
+        coxaF_BR : {p: 180, d: 0.9, i: 20}
+        femurF_BR : {p: 180, d: 0.9, i: 20}
+        tibiaF_BR : {p: 180, d: 0.9, i: 20}

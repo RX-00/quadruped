@@ -1,0 +1,23 @@
+left_front:
+  - coxaF_FL
+  - femurF_FL
+  - tibiaF_FL
+  - footF_FL
+
+right_front:
+  - coxaF_FR
+  - femurF_FR
+  - tibiaF_FR
+  - footF_FR
+
+left_hind:
+  - coxaF_BL
+  - femurF_BL
+  - tibiaF_BL
+  - footF_BL
+
+right_hind:
+  - coxaF_BR
+  - femurF_BR
+  - tibiaF_BR
+  - footF_BR

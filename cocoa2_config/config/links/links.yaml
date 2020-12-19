@@ -1,0 +1,24 @@
+base: base_link
+left_front:
+  - coxa_FL
+  - femur_FL
+  - tibia_FL
+  - foot_FL
+
+right_front:
+  - coxa_FR
+  - femur_FR
+  - tibia_FR
+  - foot_FR
+
+left_hind:
+  - coxa_BL
+  - femur_BL
+  - tibia_BL
+  - foot_BL
+
+right_hind:
+  - coxa_BR
+  - femur_BR
+  - tibia_BR
+  - foot_BR
