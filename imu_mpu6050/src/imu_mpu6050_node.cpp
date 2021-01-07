@@ -65,7 +65,13 @@ float euler[3];         // [psi, theta, phi]    Euler angle container
 float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
 // mpu offsets
-int ax, ay, az, gx, gy, gz;
+//int ax, ay, az, gx, gy, gz;
+int ax = -2521;
+int ay = 680;
+int az = 1974;
+int gx = 25;
+int gy = 21;
+int gz = 40;
 
 // AD0 low = 0x68 (default for InvenSense eval and SparkFun breakout board)
 // AD0 high = 0x69
@@ -96,6 +102,15 @@ void setup(ros::NodeHandle &nh, ros::Publisher &imu_pub_) {
     // load and configure the DMP
     printf("Initializing DMP...\n");
     devStatus = mpu.dmpInitialize();
+
+    // supply your own gyro offsets here!
+    mpu.setXGyroOffset(gx);
+    mpu.setYGyroOffset(gy);
+    mpu.setZGyroOffset(gz);
+    mpu.setXAccelOffset(ax);
+    mpu.setYAccelOffset(ay);
+    mpu.setZAccelOffset(az);
+
 
     // make sure it worked (returns 0 if so)
     if (devStatus == 0) {
